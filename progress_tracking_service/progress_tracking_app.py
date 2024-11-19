@@ -12,7 +12,7 @@ from psycopg2.extras import RealDictCursor
 import warnings
 import logging
 
-logger = logging.getLogger('progress_tracking')
+logger = logging.getLogger('progress_tracking_app')
 logger.setLevel(logging.INFO)
 console_handler = logging.StreamHandler()
 
