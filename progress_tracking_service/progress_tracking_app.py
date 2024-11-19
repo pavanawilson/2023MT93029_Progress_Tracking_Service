@@ -142,7 +142,7 @@ db_config = {
     "user": "fitnessdb_owner",
     "password": "zUkQGO3BXec2",
     "host": "ep-winter-block-a5pb6mh3.us-east-2.aws.neon.tech",
-    "port": "5432"  # or whatever port Neon DB specifies
+    "port": "5432"
 }
 
 def get_db_connection():
