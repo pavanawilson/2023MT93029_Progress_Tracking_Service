@@ -9,8 +9,23 @@ from jwt.algorithms import RSAAlgorithm
 import time
 from datetime import date
 from psycopg2.extras import RealDictCursor
+import warnings
+import logging
+
+logger = logging.getLogger('progress_tracking')
+logger.setLevel(logging.INFO)
+console_handler = logging.StreamHandler()
+
+# Create a formatter and set it for the console handler
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+
+# Add the console handler to the logger
+logger.addHandler(console_handler)
 
 app = Flask(__name__)
+
+warnings.filterwarnings('ignore', category=UserWarning, message="This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.")
 
 # Global variables to store the token and its expiration time
 access_token = None
@@ -20,6 +35,14 @@ token_expiration_time = 0
 AUTH0_DOMAIN = "dev-xf7eb30rgaz2rvse.us.auth0.com"
 CLIENT_ID = "sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e"
 CLIENT_SECRET = "ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu"
+
+USER_SVC_BASE_URL = None
+
+
+def initialize_parameters(args : argparse.Namespace):
+    global USER_SVC_BASE_URL
+    USER_SVC_BASE_URL = str(args.user_svc_base_url).rstrip("/")
+    logger.info("user service base url intialized with " + USER_SVC_BASE_URL)
 
 def get_access_token(audience):
     global access_token, token_expiration_time
@@ -133,7 +156,7 @@ def get_db_connection():
 
 def validate_user(user_id):
     # Get the access token for authorization
-    validate_audience =  f"http://127.0.0.1:5001/api/users/validate/{user_id}"   #/validate/{userId} f"{base_url}/api/user/validate/{user_id}"
+    validate_audience =  f"{USER_SVC_BASE_URL}/validate/{user_id}"   #/validate/{userId} f"{base_url}/api/user/validate/{user_id}"
     try:
         access_token = get_access_token(validate_audience)
     except Exception as e:
@@ -360,9 +383,12 @@ def delete_all_logs_for_user(user_id):
         conn.close()
         
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser(description="Validate a user with a dynamic base URL")
-    # parser.add_argument("base_url", help="The base URL of the server (e.g., http://localhost:5000)")
-    # parser.add_argument("port", help="The port where the Progress Tracking app has to run (e.g., 5000)")
-    # args = parser.parse_args()
+    from waitress import serve
+    parser = argparse.ArgumentParser(description="Validate a user with a dynamic base URL")
+    parser.add_argument("--user_svc_base_url", help="The base URL of the server (e.g., http://localhost:5000)", default="http://127.0.0.1:5001/api/users")
+    parser.add_argument("--port", help="The port where the Progress Tracking app has to run (e.g., 5000)", default=5000)
+    args = parser.parse_args()
+    initialize_parameters(args=args)
     # app.run(debug=True, port=args.port)
-    app.run(debug=True)
+    # app.run(debug=True)
+    serve(app, host="0.0.0.0", port=args.port)
