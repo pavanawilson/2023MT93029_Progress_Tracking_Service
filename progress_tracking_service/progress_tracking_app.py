@@ -38,39 +38,20 @@ CLIENT_SECRET = "ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUl
 
 USER_SVC_BASE_URL = None
 
+db_config = {
+    "dbname": "fitnessdb",
+    "user": "fitnessdb_owner",
+    "password": "zUkQGO3BXec2",
+    "host": "ep-winter-block-a5pb6mh3.us-east-2.aws.neon.tech",
+    "port": "5432"
+}
+
+import json
 
 def initialize_parameters(args : argparse.Namespace):
     global USER_SVC_BASE_URL
     USER_SVC_BASE_URL = str(args.user_svc_base_url).rstrip("/")
-    logger.info("user service base url intialized with " + USER_SVC_BASE_URL)
-
-def get_access_token(audience):
-    global access_token, token_expiration_time
-
-    # Check if the token is still valid
-    if access_token and time.time() < token_expiration_time:
-        return access_token
-
-    # Otherwise, request a new token
-    url = f"https://{AUTH0_DOMAIN}/oauth/token"
-    payload = {
-        "grant_type": "client_credentials",
-        "client_id": CLIENT_ID,
-        "client_secret": CLIENT_SECRET,
-        "audience": audience
-    }
-    headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    response = requests.post(url, data=payload, headers=headers)
-
-    if response.status_code == 200:
-        token_data = response.json()
-        
-        access_token = response.json().get('access_token')
-        expires_in = token_data["expires_in"]  # In seconds
-        token_expiration_time = time.time() + expires_in
-        return access_token
-    else:
-        raise Exception("Failed to obtain token: " + response.text)
+    logger.info("User service base url intialized with: " + USER_SVC_BASE_URL)
 
 def get_public_key(token, audience):
     try:
@@ -105,7 +86,6 @@ def get_public_key(token, audience):
         raise Exception("Invalid token")
 
 def decode_token(token, audience):
-    # try:
         # Fetch the public key in PEM format
         public_key = get_public_key(token, audience)
 
@@ -117,61 +97,49 @@ def validate_token(request, audience):
         # Extract the token from the Authorization header
     auth_header = request.headers.get('Authorization')
     if not auth_header:
+        logger.error("Authorization header missing for URL: " + audience )
         return jsonify({"error": "Authorization header missing"}), 401
 
     # Expecting token in format "Bearer <token>"
     try:
         token = auth_header.split(" ")[1]
     except IndexError:
+        logger.error("Token format invalid for URL: " + audience )
         return jsonify({"error": "Token format invalid"}), 401
     
     # Decode the token
     try:
         decoded_token = decode_token(token, audience)
     except jwt.ExpiredSignatureError:
+        logger.error("Token has expired for URL: " + audience )
         return jsonify({"error": "Token has expired"}), 401
     except jwt.InvalidTokenError:
+        logger.error("Invalid token for URL: " + audience )
         return jsonify({"error": "Invalid token"}), 401
     if not decoded_token:
-        return jsonify({"error": "Unauthorized"}), 401
-    if not decoded_token:
+        logger.error("Unauthorized access to URL: " + audience )
         return jsonify({"error": "Unauthorized"}), 401
             
-db_config = {
-    "dbname": "fitnessdb",
-    "user": "fitnessdb_owner",
-    "password": "zUkQGO3BXec2",
-    "host": "ep-winter-block-a5pb6mh3.us-east-2.aws.neon.tech",
-    "port": "5432"
-}
-
 def get_db_connection():
     try:
-        # conn = psycopg2.connect(DATABASE_URL)
         conn = psycopg2.connect(**db_config)
-        print("Connected to Neon DB successfully")
+        logger.info("Connected to Neon DB successfully")
         return conn
     except Exception as e:
-        print("Error connecting to Neon DB:", e)
+        logger.error("Error connecting to Neon DB: "+ e )
 
 def validate_user(user_id):
-    # Get the access token for authorization
-    validate_audience =  f"{USER_SVC_BASE_URL}/validate/{user_id}"   #/validate/{userId} f"{base_url}/api/user/validate/{user_id}"
+    # Validate the user by calling the User Service endpoint
     try:
-        access_token = get_access_token(validate_audience)
-    except Exception as e:
-        return jsonify({"error": f"Error getting access token: {str(e)}"}), 500
-    
-    # Validate the user by calling the User Service endpoint with the access token
-    try:
-        validation_url = f"http://127.0.0.1:5001/api/users/validate/{user_id}"   #/validate/{userId} f"{base_url}/api/user/validate/{user_id}"
+        validation_url = f"{USER_SVC_BASE_URL}/validate/{user_id}" #f"http://127.0.0.1:5001/api/validate/{userid}"   #/validate/{userId} f"{base_url}/api/user/validate/{user_id}"
         headers = {"Authorization": f"Bearer {access_token}"}
         validation_response = requests.get(validation_url, headers=headers)
         if validation_response.status_code == 200 and validation_response.json().get("valid") == True:
             return validation_response.json().get("valid")
-        else:
+        else:     
             # User validation failed
-            return jsonify({"error": "User validation failed or user does not exist"}), 404
+            return False
+            # return jsonify({"error": "User validation failed or user does not exist"}), 404
     except requests.exceptions.RequestException as e:
         # Handle errors in making the validation request
         print(f"Error validating user: {e}")
@@ -204,7 +172,7 @@ def get_user_progress(user_id):
     
     cursor.close()
     conn.close()
-    
+    logger.info("Get user progress API call")
     return jsonify({"progress_logs": progress_data})
 
 @app.route('/api/progress/summary/<user_id>', methods=['GET'])
@@ -223,7 +191,7 @@ def get_progress_summary(user_id):
     
     cursor.close()
     conn.close()
-
+    logger.info("Get user progress summary API call")
     return jsonify({
         "user_id": user_id,
         "average_weight": summary[0],
@@ -232,10 +200,10 @@ def get_progress_summary(user_id):
 
 @app.route('/api/progress/log', methods=['POST'])
 def log_progress():
-     
     # Parse the JSON data from the request
     data = request.get_json()
     if not data:
+        logger.error("Invalid or missing JSON data")
         return jsonify({"error": "Invalid or missing JSON data"}), 400
 
     # Extract required fields
@@ -247,41 +215,46 @@ def log_progress():
 
     # Validate required fields
     if not all([user_id, date_logged, weight_kg, workout_done, calories_burned]):
+        logger.error("All fields required to be filled for logging progress")
         return jsonify({"error": "All fields (user_id, date, weight_kg, workout_done, calories_burned) are required"}), 400
+    valid_user_response =  validate_user(user_id)
+    if valid_user_response:
+        #Check if validation was successful
+        try:
+            # Connect to the database
+            conn = get_db_connection()
+            cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-    # if validate_user(user_id) == True:
-    #     #Check if validation was successful
-    try:
-        # Connect to the database
-        conn = get_db_connection()
-        cursor = conn.cursor(cursor_factory=RealDictCursor)
+            # Insert data into the progress_logs table
+            cursor.execute("""
+            INSERT INTO progress_logs (user_id, date, weight_kg, workout_done, calories_burned)
+            VALUES (%s, %s, %s, %s, %s) RETURNING log_id;
+            """, (user_id, date_logged, weight_kg, workout_done, calories_burned))
 
-        # Insert data into the progress_logs table
-        cursor.execute("""
-        INSERT INTO progress_logs (user_id, date, weight_kg, workout_done, calories_burned)
-        VALUES (%s, %s, %s, %s, %s) RETURNING log_id;
-        """, (user_id, date_logged, weight_kg, workout_done, calories_burned))
+            # Get the ID of the newly inserted row
+            progress_id = cursor.fetchone()['log_id']
 
-        # Get the ID of the newly inserted row
-        progress_id = cursor.fetchone()['log_id']
+            # Commit the transaction
+            conn.commit()
 
-        # Commit the transaction
-        conn.commit()
 
-        # Close the cursor and connection
-        cursor.close()
-        conn.close()
+            logger.info("Progress logged successfully for log_id: " + str(progress_id))
+                        # Close the cursor and connection
+            cursor.close()
+            conn.close()
+            # Return a success response
+            return jsonify({"message": "Progress logged successfully", "id": progress_id}), 201
 
-        # Return a success response
-        return jsonify({"message": "Progress logged successfully", "id": progress_id}), 201
-
-    except Exception as e:
-        conn.rollback()
-        print(f"Error logging progress: {e}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        cursor.close()
-        conn.close()
+        except Exception as e:
+            conn.rollback()
+            logger.error("Error logging progress: " + {str(e)} )
+            return jsonify({"error": str(e)}), 500
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        logger.error("Invalid userid")
+        return jsonify({"message": "Error innvalidating userid", "id": 1}), 400
         
 @app.route('/api/progress/log/<log_id>', methods=['PUT'])
 def update_progress_log(log_id):
@@ -306,11 +279,14 @@ def update_progress_log(log_id):
         conn.commit()
         
         if updated_row:
+            logger.info("Progress log updated for log_id: " + log_id)
             return jsonify({"message": "Progress log updated", "updated_log": updated_row}), 200
         else:
+            logger.error("Log entry not found for log_id: " + log_id)
             return jsonify({"error": "Log entry not found"}), 404
     except Exception as e:
         conn.rollback()
+        logger.error("Error in log update: " + str(e) )
         return jsonify({"error": str(e)}), 500      
     finally:
         cursor.close()
@@ -337,12 +313,15 @@ def delete_progress_log(log_id):
         conn.commit()
         
         if deleted_row:
+            logger.info("Progress log deleted for log_id: " + log_id)
             return jsonify({"message": "Progress log deleted", "deleted_log_id": deleted_row[0]}), 200
         else:
+            logger.error("Log entry not found for log_id: " + log_id)
             return jsonify({"error": "Log entry not found"}), 404
             
     except Exception as e:
         conn.rollback()
+        logger.error("Error deleting log: " + str(e))
         return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
@@ -369,14 +348,17 @@ def delete_all_logs_for_user(user_id):
         conn.commit()
         
         if deleted_rows > 0:
+            logger.info("All progress logs deleted for userid: " + user_id)
             return jsonify({
                 "message": f"All progress logs for user {user_id} deleted",
                 "deleted_log_count": deleted_rows
             }), 200
         else:
+            logger.error("No logs found for userid: " + user_id)
             return jsonify({"error": "No logs found for the given user_id"}), 404
     except Exception as e:
         conn.rollback()
+        logger.error("Error deleting logs: " + str(e))
         return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
@@ -388,7 +370,7 @@ if __name__ == '__main__':
     parser.add_argument("--user_svc_base_url", help="The base URL of the server (e.g., http://localhost:5000)", default="http://127.0.0.1:5001/api/users")
     parser.add_argument("--port", help="The port where the Progress Tracking app has to run (e.g., 5000)", default=5000)
     args = parser.parse_args()
+    logger.info("Progress tracking service started at port: " + args.port)
     initialize_parameters(args=args)
-    # app.run(debug=True, port=args.port)
-    # app.run(debug=True)
     serve(app, host="0.0.0.0", port=args.port)
+    # app.run(debug=True, port=args.port)
