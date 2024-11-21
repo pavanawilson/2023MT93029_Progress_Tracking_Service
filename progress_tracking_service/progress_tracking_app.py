@@ -410,4 +410,3 @@ if __name__ == '__main__':
     logger.info("Progress tracking service started at port: " + args.port)
     initialize_parameters(args=args)
     serve(app, host="0.0.0.0", port=args.port)
-    # app.run(debug=True, port=args.port)
