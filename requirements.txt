@@ -1,1 +1,9 @@
 flask
+argparse
+psycopg2
+requests
+jwt
+RSAAlgorithm
+RealDictCursor
+warnings
+logging

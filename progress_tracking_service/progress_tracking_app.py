@@ -3,7 +3,6 @@ from flask import Flask, request, jsonify
 import psycopg2
 import requests
 import jwt
-from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 from jwt.algorithms import RSAAlgorithm
 from psycopg2.extras import RealDictCursor
 import warnings
