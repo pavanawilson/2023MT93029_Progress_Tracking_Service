@@ -175,6 +175,8 @@ def get_user_progress(user_id):
         cursor.close()
         conn.close()
         return jsonify({"progress_logs": progress_data})
+    except MissingTokenException as e:
+            return jsonify({"message": "Authorization header missing"}), 401
     except ExpiredTokenException as e:
         return jsonify({"message": "Token has expired"}), 401
     except InvalidTokenException as e:
@@ -207,6 +209,8 @@ def get_progress_summary(user_id):
             "average_weight": summary[0],
             "average_calories_burned": summary[1]
         })
+    except MissingTokenException as e:
+            return jsonify({"message": "Authorization header missing"}), 401        
     except ExpiredTokenException as e:
         return jsonify({"message": "Token has expired"}), 401
     except InvalidTokenException as e:
@@ -218,56 +222,70 @@ def get_progress_summary(user_id):
 @app.route('/api/progress/log', methods=['POST'])
 def log_progress():
     logger.info("Log user progress API call")
-    # Parse the JSON data from the request
-    data = request.get_json()
-    if not data:
-        logger.error("Invalid or missing JSON data")
-        return jsonify({"error": "Invalid or missing JSON data"}), 400
+    #Extract the token and validate
+    audience = "http://127.0.0.1:5000/api/progress/log"
+    try:
+        validate_token(request, audience)
+    
+        # Parse the JSON data from the request
+        data = request.get_json()
+        if not data:
+            logger.error("Invalid or missing JSON data")
+            return jsonify({"error": "Invalid or missing JSON data"}), 400
 
-    # Extract required fields
-    user_id = data.get('user_id')
-    date_logged = data.get('date')
-    weight_kg = data.get('weight_kg')
-    workout_done = data.get('workout_done')
-    calories_burned = data.get('calories_burned')
+        # Extract required fields
+        user_id = data.get('user_id')
+        date_logged = data.get('date')
+        weight_kg = data.get('weight_kg')
+        workout_done = data.get('workout_done')
+        calories_burned = data.get('calories_burned')
 
-    # Validate required fields
-    if not all([user_id, date_logged, weight_kg, workout_done, calories_burned]):
-        logger.error("All fields required to be filled for logging progress")
-        return jsonify({"error": "All fields (user_id, date, weight_kg, workout_done, calories_burned) are required"}), 400
-    valid_user_response =  validate_user(user_id)
-    if valid_user_response:
-        #Check if validation was successful
-        try:
-            # Connect to the database
-            conn = get_db_connection()
-            cursor = conn.cursor(cursor_factory=RealDictCursor)
+        # Validate required fields
+        if not all([user_id, date_logged, weight_kg, workout_done, calories_burned]):
+            logger.error("All fields required to be filled for logging progress")
+            return jsonify({"error": "All fields (user_id, date, weight_kg, workout_done, calories_burned) are required"}), 400
+        valid_user_response =  validate_user(user_id)
+        if valid_user_response:
+            #Check if validation was successful
+            try:
+                # Connect to the database
+                conn = get_db_connection()
+                cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-            # Insert data into the progress_logs table
-            cursor.execute("""
-            INSERT INTO progress_logs (user_id, date, weight_kg, workout_done, calories_burned)
-            VALUES (%s, %s, %s, %s, %s) RETURNING log_id;
-            """, (user_id, date_logged, weight_kg, workout_done, calories_burned))
+                # Insert data into the progress_logs table
+                cursor.execute("""
+                INSERT INTO progress_logs (user_id, date, weight_kg, workout_done, calories_burned)
+                VALUES (%s, %s, %s, %s, %s) RETURNING log_id;
+                """, (user_id, date_logged, weight_kg, workout_done, calories_burned))
 
-            # Get the ID of the newly inserted row
-            progress_id = cursor.fetchone()['log_id']
+                # Get the ID of the newly inserted row
+                progress_id = cursor.fetchone()['log_id']
 
-            # Commit the transaction
-            conn.commit()
-            logger.info("Progress logged successfully for log_id: " + str(progress_id))
-            # Return a success response
-            return jsonify({"message": "Progress logged successfully", "id": progress_id}), 201
+                # Commit the transaction
+                conn.commit()
+                logger.info("Progress logged successfully for log_id: " + str(progress_id))
+                # Return a success response
+                return jsonify({"message": "Progress logged successfully", "id": progress_id}), 201
 
-        except Exception as e:
-            conn.rollback()
-            logger.error("Error logging progress: " + {str(e)} )
-            return jsonify({"error": str(e)}), 500
-        finally:
-            cursor.close()
-            conn.close()
-    else:
-        logger.error("Invalid userid")
-        return jsonify({"message": "Error innvalidating userid", "id": 1}), 400
+            except Exception as e:
+                conn.rollback()
+                logger.error("Error logging progress: " + {str(e)} )
+                return jsonify({"error": str(e)}), 500
+            finally:
+                cursor.close()
+                conn.close()
+        else:
+            logger.error("Invalid userid")
+            return jsonify({"message": "Error innvalidating userid", "id": 1}), 400
+    except MissingTokenException as e:
+        return jsonify({"message": "Authorization header missing"}), 401
+    except ExpiredTokenException as e:
+        return jsonify({"message": "Token has expired"}), 401
+    except InvalidTokenException as e:
+        return jsonify({"message": "Invalid token"}), 401
+    except Exception as e:
+        return jsonify({"message": "Error validating token "+ str(e)}), 401 
+    
         
 @app.route('/api/progress/log/<log_id>', methods=['PUT'])
 def update_progress_log(log_id):
@@ -306,6 +324,8 @@ def update_progress_log(log_id):
         finally:
             cursor.close()
             conn.close()
+    except MissingTokenException as e:
+        return jsonify({"message": "Authorization header missing"}), 401
     except ExpiredTokenException as e:
         return jsonify({"message": "Token has expired"}), 401
     except InvalidTokenException as e:
@@ -349,6 +369,8 @@ def delete_progress_log(log_id):
         finally:
             cursor.close()
             conn.close()
+    except MissingTokenException as e:
+        return jsonify({"message": "Authorization header missing"}), 401
     except ExpiredTokenException as e:
         return jsonify({"message": "Token has expired"}), 401
     except InvalidTokenException as e:
@@ -394,6 +416,8 @@ def delete_all_logs_for_user(user_id):
         finally:
             cursor.close()
             conn.close()
+    except MissingTokenException as e:
+        return jsonify({"message": "Authorization header missing"}), 401
     except ExpiredTokenException as e:
         return jsonify({"message": "Token has expired"}), 401
     except InvalidTokenException as e:
@@ -407,6 +431,5 @@ if __name__ == '__main__':
     parser.add_argument("--user_svc_base_url", help="The base URL of the server (e.g., http://localhost:5000)", default="http://127.0.0.1:5001/api/users")
     parser.add_argument("--port", help="The port where the Progress Tracking app has to run (e.g., 5000)", default=5000)
     args = parser.parse_args()
-    logger.info("Progress tracking service started at port: " + args.port)
     initialize_parameters(args=args)
     serve(app, host="0.0.0.0", port=args.port)
