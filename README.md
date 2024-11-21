@@ -1,10 +1,10 @@
 # Progress Tracking Service
 
 ## Technologies used
-- Backend: Python, Flask
-- Database: Postgres hosted in Cloud Platform(https://neon/tech/)
-- Security: JWT from Auth0(https://auth0.com)
-- API testing tool: Postman
+- **Backend**: Python, Flask
+- **Database**: Postgres hosted in Cloud Platform(https://neon/tech/)
+- **Security**: JWT from Auth0(https://auth0.com)
+- **API testing tool**: Postman
 ## Prerequisites
 - Install python
 - Install pip
@@ -34,3 +34,11 @@ python progress_tracking_app.py --user_svc_base_url http://127.0.0.1:5001/api/ -
 
 ## Security
 All API calls are authenticated with a JWT Bearer token in header.
+
+## Inter-service communication
+Synchronous REST API call  to User Profile service is used for validating user before logging user progress.
+
+## Database Pattern
+**Event Sourcing Pattern**: Each log entry (progress_logs) is treated as an immutable event, capturing user progress over time. This pattern supports historical data analysis and rollback capabilities.
+
+**Foreign Key Pattern**: The user_id in progress_logs references the user_id in the User Profile Service, maintaining consistency.
