@@ -130,7 +130,7 @@ def get_db_connection():
 def validate_user(user_id):
     # Validate the user by calling the User Service endpoint
     try:
-        validation_url = f"{USER_SVC_BASE_URL}/validate/{user_id}"
+        validation_url = f"{USER_SVC_BASE_URL}/api/users/validate/{user_id}"
         headers = {"Authorization": f"Bearer {access_token}"}
         validation_response = requests.get(validation_url, headers=headers)
         if validation_response.status_code == 200 and validation_response.json().get("valid") == True:
@@ -187,36 +187,24 @@ def get_user_progress(user_id):
 @app.route('/api/progress/summary/<user_id>', methods=['GET'])
 def get_progress_summary(user_id):
     logger.info("Get user progress summary API call")
-    #Extract the token and validate
-    audience = "http://127.0.0.1:5000/api/progress/summary/{user_id}"
-    try:
-        validate_token(request, audience)
+        
+    conn = get_db_connection()
+    cursor = conn.cursor()
     
-        conn = get_db_connection()
-        cursor = conn.cursor()
+    cursor.execute("""
+        SELECT AVG(weight_kg), AVG(calories_burned) FROM progress_logs WHERE user_id = %s;
+    """, (user_id,))
+    summary = cursor.fetchone()
     
-        cursor.execute("""
-            SELECT AVG(weight_kg), AVG(calories_burned) FROM progress_logs WHERE user_id = %s;
-        """, (user_id,))
-        summary = cursor.fetchone()
-    
-        cursor.close()
-        conn.close()
+    cursor.close()
+    conn.close()
    
-        return jsonify({
-            "user_id": user_id,
-            "average_weight": summary[0],
-            "average_calories_burned": summary[1]
-        })
-    except MissingTokenException as e:
-            return jsonify({"message": "Authorization header missing"}), 401        
-    except ExpiredTokenException as e:
-        return jsonify({"message": "Token has expired"}), 401
-    except InvalidTokenException as e:
-        return jsonify({"message": "Invalid token"}), 401
-    except Exception as e:
-        return jsonify({"message": "Error validating token "+ str(e)}), 401 
-   
+    return jsonify({
+        "user_id": user_id,
+        "average_weight": summary[0],
+        "average_calories_burned": summary[1]
+    })
+  
     
 @app.route('/api/progress/log', methods=['POST'])
 def log_progress():
@@ -380,49 +368,37 @@ def delete_progress_log(log_id):
 @app.route('/api/progress/user/<user_id>/logs', methods=['DELETE'])
 def delete_all_logs_for_user(user_id):
     logger.info("Delete all logs for a user API call")
-    #Extract the token and validate
-    audience = "http://127.0.0.1:5000/api/progress/user/{user_id}/logs"
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
     try:
-        validate_token(request, audience)
-    
-        conn = get_db_connection()
-        cursor = conn.cursor()
-    
-        try:
-            # Delete query
-            cursor.execute("""
-                DELETE FROM progress_logs 
-                WHERE user_id = %s
-                RETURNING user_id;
-            """, (user_id,))
+        # Delete query
+        cursor.execute("""
+        DELETE FROM progress_logs 
+        WHERE user_id = %s
+        RETURNING user_id;
+        """, (user_id,))
         
-            deleted_rows = cursor.rowcount  # Number of deleted rows
-            conn.commit()
+        deleted_rows = cursor.rowcount  # Number of deleted rows
+        conn.commit()
             
-            if deleted_rows > 0:
-                logger.info("All progress logs deleted for userid: " + user_id)
-                return jsonify({
-                    "message": f"All progress logs for user deleted",
-                    "deleted_log_count": deleted_rows
-                }), 200
-            else:
-                logger.error("No logs found for userid: " + user_id)
-                return jsonify({"error": "No logs found for the given user_id"}), 404
-        except Exception as e:
-            conn.rollback()
-            logger.error("Error deleting logs: " + str(e))
-            return jsonify({"error": str(e)}), 500
-        finally:
-            cursor.close()
-            conn.close()
-    except MissingTokenException as e:
-        return jsonify({"message": "Authorization header missing"}), 401
-    except ExpiredTokenException as e:
-        return jsonify({"message": "Token has expired"}), 401
-    except InvalidTokenException as e:
-        return jsonify({"message": "Invalid token"}), 401
+        if deleted_rows > 0:
+            logger.info("All progress logs deleted for userid: " + user_id)
+            return jsonify({
+                "message": f"All progress logs for user deleted",
+                "deleted_log_count": deleted_rows
+            }), 200
+        else:
+            logger.error("No logs found for userid: " + user_id)
+            return jsonify({"error": "No logs found for the given user_id"}), 404
     except Exception as e:
-        return jsonify({"message": "Error validating token "+ str(e)}), 401 
+        conn.rollback()
+        logger.error("Error deleting logs: " + str(e))
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
         
 if __name__ == '__main__':
     from waitress import serve

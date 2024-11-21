@@ -57,7 +57,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9sb2ciLCJpYXQiOjE3MzIxOTgzOTksImV4cCI6MTczMjI4NDc5OSwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.bMPkIsa3Pzn-P28v6m-glvjWYj4_0RIgxjAfClgfawUtsExmBQ3S0FKotFFG4bRgUDdZMIjcKr7c7FI85w6Gyc1DOiQgTdBrFUSXb0Y-akr6Ls1nnF7ECp2r4nLiDM1C8WYZFC4iFRR2JlIOnGFjQhUGshgaoOpFhKgNyeuTFgFCPV-FK-RBhCKgO_D0k9UHw_YPnbEmLjEd02dFGH93_G9iZson4V0nqtGZjDCNtboPralJfMsRe3FIsizrL-meN0l_rhsVGHQ9MNllHAejbng4RijP_7-YlPyZuUtz3EkLIU-plcPZJBAmfDXTljEvb4iGEfBjwJff1mVCUH33rQ",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9sb2ciLCJpYXQiOjE3MzIyMTE2NDksImV4cCI6MTczMjI5ODA0OSwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.Ydp_jEC_XIGWs69hX0Nr5DfMOcbNRBkcpoGK_aJJ-9_vsmrRtEGrxY7sPY9TXQr8GUbJ_pGBcInMFokcGEWvGZGaC7EMJrdQ_T5KHmV45I4GOBeORAYqwrFfHJSWpxIlkN_pV41RN1gMy7tTCH8mb8SGix4rHaUvoWv-1L_nTPvYHlmd9nQykmEvnHahidlb9mQIPEkdVy7wWWkv7Z1cwwHmvNaVxd1uE1xAV7R9bzGzBsXEJ1XXjIjOC72gg_K6MKmeftE_Dd_kgvrh5THuzN6r0oR_R2rgNRdxaseYRo-jbP5kk5nfqB9d97bgEvuLMv95Xw1euo-dW6qnFwa6DQ",
 							"type": "string"
 						}
 					]
@@ -66,7 +66,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"user_id\": \"657df27b-44bb-4a53-8c53-fb31b02c849b\",\r\n  \"date\": \"2024-11-21\",\r\n  \"weight_kg\": 60,\r\n  \"workout_done\": \"Cardio Routine\",\r\n  \"calories_burned\": 170\r\n}\r\n",
+					"raw": "{\r\n  \"user_id\": \"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5\",\r\n  \"date\": \"2024-11-17\",\r\n  \"weight_kg\": 80,\r\n  \"workout_done\": \"Cardio Routine\",\r\n  \"calories_burned\": 190\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -74,15 +74,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/log",
-					"protocol": "http",
+					"raw": "https://6628-2401-4900-1cb8-3e2-e872-4ecf-b3e5-2c8.ngrok-free.app/api/progress/log",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"6628-2401-4900-1cb8-3e2-e872-4ecf-b3e5-2c8",
+						"ngrok-free",
+						"app"
 					],
-					"port": "5000",
 					"path": [
 						"api",
 						"progress",
@@ -163,7 +161,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/7288fdb7-2b31-4de6-a06a-bcebd08a54e5",
+					"raw": "http://127.0.0.1:5000/api/progress/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -175,7 +173,7 @@
 					"path": [
 						"api",
 						"progress",
-						"7288fdb7-2b31-4de6-a06a-bcebd08a54e5"
+						"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5"
 					]
 				}
 			},
@@ -231,14 +229,7 @@
 			},
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9zdW1tYXJ5L3t1c2VyX2lkfSIsImlhdCI6MTczMjE5Mzc3NywiZXhwIjoxNzMyMjgwMTc3LCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZSJ9.mHeXp5v5i16pv6k7xRnfGlFCEopsTTzWvKRxVUfiqL2VrfttZ_t0RzaTfaTW8i0w-lOX2TQPsy5Ka5fOBV4CCSpa58DTN7sY31zUDfOTgU_5Hg1T2_pI2ShTFSLQb3UtvyuL1VQYmYYyl8s_xjQfeNHc1lDXG-3BjyFdMcTUlvfXD8MidImVICAh74oqj7DflhPIvH3TzVTcb-_Zphg7T9_sxUQD8Gdb0X7Cjn6S5LaVRJS8jAo1WS3SA0Yz7J38-_BFUHqMqMbZbq3S4H0WU3UcDm5_EzuHwJIJ-AVPGlCUt8ay8nqiRqObuJR0ettw0N8mbzsYx5CgIs8eu8eeSg",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -252,7 +243,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/summary/7288fdb7-2b31-4de6-a06a-bcebd08a54e5",
+					"raw": "http://127.0.0.1:5000/api/progress/summary/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -265,7 +256,7 @@
 						"api",
 						"progress",
 						"summary",
-						"7288fdb7-2b31-4de6-a06a-bcebd08a54e5"
+						"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5"
 					]
 				}
 			},
@@ -331,7 +322,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calories_burned\": 260,\r\n    \"weight_kg\": \"59\",\r\n    \"workout_done\": \"Home workout\"\r\n}",
+					"raw": "{\r\n    \"calories_burned\": 110,\r\n    \"weight_kg\": \"80\",\r\n    \"workout_done\": \"Cardio Routine\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -339,7 +330,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/log/4",
+					"raw": "http://127.0.0.1:5000/api/progress/log/58",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -352,7 +343,7 @@
 						"api",
 						"progress",
 						"log",
-						"4"
+						"58"
 					]
 				}
 			},
@@ -383,7 +374,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/log/22",
+					"raw": "http://127.0.0.1:5000/api/progress/log/58",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -396,7 +387,7 @@
 						"api",
 						"progress",
 						"log",
-						"22"
+						"58"
 					]
 				}
 			},
@@ -449,14 +440,7 @@
 			"name": "Delete All User Logs Request",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy91c2VyL3t1c2VyX2lkfS9sb2dzIiwiaWF0IjoxNzMyMTk0MDI4LCJleHAiOjE3MzIyODA0MjgsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsImF6cCI6InNacDRBUWdwOTVySU1nY3BLb1hMdXpadHFOTTcyajJlIn0.R6UTHhHMlMDWHRyRgIEBba2M2ZvrQBBn0lx5Pb_s0izzRZTOrpFLtIM3SAsVYT4QS72oxyI6yBzy8xDXk14hiNZXGhwOK0-VsGg574YwaZ_34bSSQGxihu3TdizfUcclPZWLC2NsOZP-F3efiLWmyM8DZKQeU5fQSeA3pP5HDYaehoHOKHrUoiQlWzyqcOTA5jtBcqUFj949Rd_N6TyWM1btYv8EQ6V7IxasPuWE5bsPNi9QJhYOVWjNJqBZbGcVLYeW7wacX4tJtHgG09V4CbpdwnrFk3_jvkrw3mShmTKKxDwazrDvQjnPXy0etP4-Dntmjad_ao12h2j0db6eZA",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "DELETE",
 				"header": [],
@@ -470,7 +454,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/user/7288fdb7-2b31-4de6-a06a-bcebd08a54e5/logs",
+					"raw": "http://127.0.0.1:5000/api/progress/user/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5/logs",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -483,7 +467,7 @@
 						"api",
 						"progress",
 						"user",
-						"7288fdb7-2b31-4de6-a06a-bcebd08a54e5",
+						"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
 						"logs"
 					]
 				}
