@@ -7,388 +7,398 @@
 	},
 	"item": [
 		{
-			"name": "Log Progress Access Token",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"client_id\": \"sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e\",\r\n    \"client_secret\": \"ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu\",\r\n    \"audience\": \"http://127.0.0.1:5000/api/progress/log\",\r\n    \"grant_type\": \"client_credentials\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Progress Tracking Requests",
+			"item": [
+				{
+					"name": "Log Progress Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9sb2ciLCJpYXQiOjE3MzIyMTE2NDksImV4cCI6MTczMjI5ODA0OSwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.Ydp_jEC_XIGWs69hX0Nr5DfMOcbNRBkcpoGK_aJJ-9_vsmrRtEGrxY7sPY9TXQr8GUbJ_pGBcInMFokcGEWvGZGaC7EMJrdQ_T5KHmV45I4GOBeORAYqwrFfHJSWpxIlkN_pV41RN1gMy7tTCH8mb8SGix4rHaUvoWv-1L_nTPvYHlmd9nQykmEvnHahidlb9mQIPEkdVy7wWWkv7Z1cwwHmvNaVxd1uE1xAV7R9bzGzBsXEJ1XXjIjOC72gg_K6MKmeftE_Dd_kgvrh5THuzN6r0oR_R2rgNRdxaseYRo-jbP5kk5nfqB9d97bgEvuLMv95Xw1euo-dW6qnFwa6DQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": \"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5\",\r\n  \"date\": \"2024-11-20\",\r\n  \"weight_kg\": 85,\r\n  \"workout_done\": \"Muscle Gain Plan\",\r\n  \"calories_burned\": 500\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/progress/log",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								"log"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://dev-xf7eb30rgaz2rvse.us.auth0.com/oauth/token?Content-Type=application/json",
-					"protocol": "https",
-					"host": [
-						"dev-xf7eb30rgaz2rvse",
-						"us",
-						"auth0",
-						"com"
-					],
-					"path": [
-						"oauth",
-						"token"
-					],
-					"query": [
-						{
-							"key": "Content-Type",
-							"value": "application/json"
+				{
+					"name": "User Progress Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy97dXNlcl9pZH0iLCJpYXQiOjE3MzIxOTMyNDAsImV4cCI6MTczMjI3OTY0MCwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.BYCLH_OeFvd3EFPmPeAkC_Zp0c_ToaiP5Ip4aR66WwcdCPNBf-rXzx-4Y1sUdS-9bG8fpVkn5SI22_ehcE5aaDJG2EdIo0E8CYWqYx2dizvqw5dZOmOW7RcAI0EQu7GULru9gfnNPD0n8I8cvCbnoP_nKv5SQbSpuTS2Uyg4ZcMsGzn4NWKrd-ZR05GVAcFevGGftuV5bm-xP5lbOAzezdjuhM74bM1p5D0jbOtwROolj8PmMhE8HVBnlRIpYMj_D0UH6tw-1Ph-K1XsM-Ds3v246lZyvkS10cJixwX4NxN2zQ7R_ZmMnACwXJ5woIW80vBoGkUu26wjAHry3NdEaQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/progress/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "User Progress Summary Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/progress/summary/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								"summary",
+								"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Log Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9sb2cve2xvZ19pZH0iLCJpYXQiOjE3MzIxOTM5MTMsImV4cCI6MTczMjI4MDMxMywiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.pQrJqkSwncrHp7HJ01O5-KoZbp_d56dAKZSX5xKr0wBPTRYV440PZ20Id-E2Mb_zeH264NOpdDLVKEicBcRNqfizvNVVsa2tW9DtuvKHkqbzLtQoJPB28h7Ti9GwmuBcJ4AiRqaf5Lh8OW6QnQMT2IrGmHfQUBo6fuWEFGtbyT16Fsc_8UEpVed_gjCvHe1m0Q_Z_ZwDw-0A0tv8NuWbP21F4WHFo8qlnpqd3XKMpeVEbv8xRkgL4rM7fwG6-N9ZFM0KyZ9RlOhG0XFbf1TGLT-w5rzyteBSZ_l8CfOwfn0QKYdh8AucNceDjiOQgEWmlKPtoG1gNHsaVtdf1WLpiA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"calories_burned\": 200,\r\n    \"weight_kg\": \"71\",\r\n    \"workout_done\": \"Muscle Gain Plan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/progress/log/50",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								"log",
+								"50"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Log Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9sb2cve2xvZ19pZH0iLCJpYXQiOjE3MzIxOTM5MTMsImV4cCI6MTczMjI4MDMxMywiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.pQrJqkSwncrHp7HJ01O5-KoZbp_d56dAKZSX5xKr0wBPTRYV440PZ20Id-E2Mb_zeH264NOpdDLVKEicBcRNqfizvNVVsa2tW9DtuvKHkqbzLtQoJPB28h7Ti9GwmuBcJ4AiRqaf5Lh8OW6QnQMT2IrGmHfQUBo6fuWEFGtbyT16Fsc_8UEpVed_gjCvHe1m0Q_Z_ZwDw-0A0tv8NuWbP21F4WHFo8qlnpqd3XKMpeVEbv8xRkgL4rM7fwG6-N9ZFM0KyZ9RlOhG0XFbf1TGLT-w5rzyteBSZ_l8CfOwfn0QKYdh8AucNceDjiOQgEWmlKPtoG1gNHsaVtdf1WLpiA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/progress/log/58",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								"log",
+								"58"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All User Logs Request",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/progress/user/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5/logs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"progress",
+								"user",
+								"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
+								"logs"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Log Progress Request",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9sb2ciLCJpYXQiOjE3MzIyMTE2NDksImV4cCI6MTczMjI5ODA0OSwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.Ydp_jEC_XIGWs69hX0Nr5DfMOcbNRBkcpoGK_aJJ-9_vsmrRtEGrxY7sPY9TXQr8GUbJ_pGBcInMFokcGEWvGZGaC7EMJrdQ_T5KHmV45I4GOBeORAYqwrFfHJSWpxIlkN_pV41RN1gMy7tTCH8mb8SGix4rHaUvoWv-1L_nTPvYHlmd9nQykmEvnHahidlb9mQIPEkdVy7wWWkv7Z1cwwHmvNaVxd1uE1xAV7R9bzGzBsXEJ1XXjIjOC72gg_K6MKmeftE_Dd_kgvrh5THuzN6r0oR_R2rgNRdxaseYRo-jbP5kk5nfqB9d97bgEvuLMv95Xw1euo-dW6qnFwa6DQ",
-							"type": "string"
+			"name": "Access Token Requests",
+			"item": [
+				{
+					"name": "Log Progress Access Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client_id\": \"sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e\",\r\n    \"client_secret\": \"ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu\",\r\n    \"audience\": \"http://127.0.0.1:5000/api/progress/log\",\r\n    \"grant_type\": \"client_credentials\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev-xf7eb30rgaz2rvse.us.auth0.com/oauth/token?Content-Type=application/json",
+							"protocol": "https",
+							"host": [
+								"dev-xf7eb30rgaz2rvse",
+								"us",
+								"auth0",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"user_id\": \"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5\",\r\n  \"date\": \"2024-11-18\",\r\n  \"weight_kg\": 80,\r\n  \"workout_done\": \"Weight Loss Plan\",\r\n  \"calories_burned\": 190\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "User Progress Access Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client_id\": \"sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e\",\r\n    \"client_secret\": \"ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu\",\r\n    \"audience\": \"http://127.0.0.1:5000/api/progress/{user_id}\",\r\n    \"grant_type\": \"client_credentials\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev-xf7eb30rgaz2rvse.us.auth0.com/oauth/token?Content-Type=application/json",
+							"protocol": "https",
+							"host": [
+								"dev-xf7eb30rgaz2rvse",
+								"us",
+								"auth0",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/log",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"progress",
-						"log"
-					]
+				{
+					"name": "Update and Delete Log Access Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client_id\": \"sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e\",\r\n    \"client_secret\": \"ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu\",\r\n    \"audience\": \"http://127.0.0.1:5000/api/progress/log/{log_id}\",\r\n    \"grant_type\": \"client_credentials\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev-xf7eb30rgaz2rvse.us.auth0.com/oauth/token?Content-Type=application/json",
+							"protocol": "https",
+							"host": [
+								"dev-xf7eb30rgaz2rvse",
+								"us",
+								"auth0",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "User Progress Access Token",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"client_id\": \"sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e\",\r\n    \"client_secret\": \"ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu\",\r\n    \"audience\": \"http://127.0.0.1:5000/api/progress/{user_id}\",\r\n    \"grant_type\": \"client_credentials\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://dev-xf7eb30rgaz2rvse.us.auth0.com/oauth/token?Content-Type=application/json",
-					"protocol": "https",
-					"host": [
-						"dev-xf7eb30rgaz2rvse",
-						"us",
-						"auth0",
-						"com"
-					],
-					"path": [
-						"oauth",
-						"token"
-					],
-					"query": [
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "User Progress Request",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy97dXNlcl9pZH0iLCJpYXQiOjE3MzIxOTMyNDAsImV4cCI6MTczMjI3OTY0MCwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.BYCLH_OeFvd3EFPmPeAkC_Zp0c_ToaiP5Ip4aR66WwcdCPNBf-rXzx-4Y1sUdS-9bG8fpVkn5SI22_ehcE5aaDJG2EdIo0E8CYWqYx2dizvqw5dZOmOW7RcAI0EQu7GULru9gfnNPD0n8I8cvCbnoP_nKv5SQbSpuTS2Uyg4ZcMsGzn4NWKrd-ZR05GVAcFevGGftuV5bm-xP5lbOAzezdjuhM74bM1p5D0jbOtwROolj8PmMhE8HVBnlRIpYMj_D0UH6tw-1Ph-K1XsM-Ds3v246lZyvkS10cJixwX4NxN2zQ7R_ZmMnACwXJ5woIW80vBoGkUu26wjAHry3NdEaQ",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"progress",
-						"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "User Progress Summary Request",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/summary/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"progress",
-						"summary",
-						"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update and Delete Log Access Token",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"client_id\": \"sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e\",\r\n    \"client_secret\": \"ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu\",\r\n    \"audience\": \"http://127.0.0.1:5000/api/progress/log/{log_id}\",\r\n    \"grant_type\": \"client_credentials\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://dev-xf7eb30rgaz2rvse.us.auth0.com/oauth/token?Content-Type=application/json",
-					"protocol": "https",
-					"host": [
-						"dev-xf7eb30rgaz2rvse",
-						"us",
-						"auth0",
-						"com"
-					],
-					"path": [
-						"oauth",
-						"token"
-					],
-					"query": [
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Log Request",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9sb2cve2xvZ19pZH0iLCJpYXQiOjE3MzIxOTM5MTMsImV4cCI6MTczMjI4MDMxMywiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.pQrJqkSwncrHp7HJ01O5-KoZbp_d56dAKZSX5xKr0wBPTRYV440PZ20Id-E2Mb_zeH264NOpdDLVKEicBcRNqfizvNVVsa2tW9DtuvKHkqbzLtQoJPB28h7Ti9GwmuBcJ4AiRqaf5Lh8OW6QnQMT2IrGmHfQUBo6fuWEFGtbyT16Fsc_8UEpVed_gjCvHe1m0Q_Z_ZwDw-0A0tv8NuWbP21F4WHFo8qlnpqd3XKMpeVEbv8xRkgL4rM7fwG6-N9ZFM0KyZ9RlOhG0XFbf1TGLT-w5rzyteBSZ_l8CfOwfn0QKYdh8AucNceDjiOQgEWmlKPtoG1gNHsaVtdf1WLpiA",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"calories_burned\": 200,\r\n    \"weight_kg\": \"71\",\r\n    \"workout_done\": \"Muscle Gain Plan\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/log/50",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"progress",
-						"log",
-						"50"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Log Request",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhVQ0xmXzNza094Yno3dXZWd2pzcyJ9.eyJpc3MiOiJodHRwczovL2Rldi14ZjdlYjMwcmdhejJydnNlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJzWnA0QVFncDk1cklNZ2NwS29YTHV6WnRxTk03MmoyZUBjbGllbnRzIiwiYXVkIjoiaHR0cDovLzEyNy4wLjAuMTo1MDAwL2FwaS9wcm9ncmVzcy9sb2cve2xvZ19pZH0iLCJpYXQiOjE3MzIxOTM5MTMsImV4cCI6MTczMjI4MDMxMywiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoic1pwNEFRZ3A5NXJJTWdjcEtvWEx1elp0cU5NNzJqMmUifQ.pQrJqkSwncrHp7HJ01O5-KoZbp_d56dAKZSX5xKr0wBPTRYV440PZ20Id-E2Mb_zeH264NOpdDLVKEicBcRNqfizvNVVsa2tW9DtuvKHkqbzLtQoJPB28h7Ti9GwmuBcJ4AiRqaf5Lh8OW6QnQMT2IrGmHfQUBo6fuWEFGtbyT16Fsc_8UEpVed_gjCvHe1m0Q_Z_ZwDw-0A0tv8NuWbP21F4WHFo8qlnpqd3XKMpeVEbv8xRkgL4rM7fwG6-N9ZFM0KyZ9RlOhG0XFbf1TGLT-w5rzyteBSZ_l8CfOwfn0QKYdh8AucNceDjiOQgEWmlKPtoG1gNHsaVtdf1WLpiA",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/log/58",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"progress",
-						"log",
-						"58"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete All User Logs Request",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/user/66b2326d-e208-4f3f-b691-43192131b829/logs",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"progress",
-						"user",
-						"66b2326d-e208-4f3f-b691-43192131b829",
-						"logs"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }
