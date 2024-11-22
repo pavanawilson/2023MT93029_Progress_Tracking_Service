@@ -66,7 +66,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"user_id\": \"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5\",\r\n  \"date\": \"2024-11-17\",\r\n  \"weight_kg\": 80,\r\n  \"workout_done\": \"Cardio Routine\",\r\n  \"calories_burned\": 190\r\n}\r\n",
+					"raw": "{\r\n  \"user_id\": \"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5\",\r\n  \"date\": \"2024-11-18\",\r\n  \"weight_kg\": 80,\r\n  \"workout_done\": \"Weight Loss Plan\",\r\n  \"calories_burned\": 190\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -74,13 +74,15 @@
 					}
 				},
 				"url": {
-					"raw": "https://6628-2401-4900-1cb8-3e2-e872-4ecf-b3e5-2c8.ngrok-free.app/api/progress/log",
-					"protocol": "https",
+					"raw": "http://127.0.0.1:5000/api/progress/log",
+					"protocol": "http",
 					"host": [
-						"6628-2401-4900-1cb8-3e2-e872-4ecf-b3e5-2c8",
-						"ngrok-free",
-						"app"
+						"127",
+						"0",
+						"0",
+						"1"
 					],
+					"port": "5000",
 					"path": [
 						"api",
 						"progress",
@@ -174,49 +176,6 @@
 						"api",
 						"progress",
 						"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "User Progress Summary Access Token",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"client_id\": \"sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e\",\r\n    \"client_secret\": \"ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu\",\r\n    \"audience\": \"http://127.0.0.1:5000/api/progress/summary/{user_id}\",\r\n    \"grant_type\": \"client_credentials\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://dev-xf7eb30rgaz2rvse.us.auth0.com/oauth/token?Content-Type=application/json",
-					"protocol": "https",
-					"host": [
-						"dev-xf7eb30rgaz2rvse",
-						"us",
-						"auth0",
-						"com"
-					],
-					"path": [
-						"oauth",
-						"token"
-					],
-					"query": [
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						}
 					]
 				}
 			},
@@ -322,7 +281,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calories_burned\": 110,\r\n    \"weight_kg\": \"80\",\r\n    \"workout_done\": \"Cardio Routine\"\r\n}",
+					"raw": "{\r\n    \"calories_burned\": 200,\r\n    \"weight_kg\": \"71\",\r\n    \"workout_done\": \"Muscle Gain Plan\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -330,7 +289,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/log/58",
+					"raw": "http://127.0.0.1:5000/api/progress/log/50",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -343,7 +302,7 @@
 						"api",
 						"progress",
 						"log",
-						"58"
+						"50"
 					]
 				}
 			},
@@ -394,49 +353,6 @@
 			"response": []
 		},
 		{
-			"name": "Delete All User Logs Access Token",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"client_id\": \"sZp4AQgp95rIMgcpKoXLuzZtqNM72j2e\",\r\n    \"client_secret\": \"ufkpj_72QmMvLUWKhLheZiPrgnr5ZjqQfr5qLowhY3e6VZnVUkwwm3rQuUrNZUlu\",\r\n    \"audience\": \"http://127.0.0.1:5000/api/progress/user/{user_id}/logs\",\r\n    \"grant_type\": \"client_credentials\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://dev-xf7eb30rgaz2rvse.us.auth0.com/oauth/token?Content-Type=application/json",
-					"protocol": "https",
-					"host": [
-						"dev-xf7eb30rgaz2rvse",
-						"us",
-						"auth0",
-						"com"
-					],
-					"path": [
-						"oauth",
-						"token"
-					],
-					"query": [
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Delete All User Logs Request",
 			"request": {
 				"auth": {
@@ -454,7 +370,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/progress/user/4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5/logs",
+					"raw": "http://127.0.0.1:5000/api/progress/user/66b2326d-e208-4f3f-b691-43192131b829/logs",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -467,7 +383,7 @@
 						"api",
 						"progress",
 						"user",
-						"4e4526c1-3a52-41cd-8bf2-c7bdf09cb8a5",
+						"66b2326d-e208-4f3f-b691-43192131b829",
 						"logs"
 					]
 				}

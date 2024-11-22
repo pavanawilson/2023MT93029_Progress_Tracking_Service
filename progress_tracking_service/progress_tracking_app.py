@@ -131,19 +131,17 @@ def validate_user(user_id):
     # Validate the user by calling the User Service endpoint
     try:
         validation_url = f"{USER_SVC_BASE_URL}/api/users/validate/{user_id}"
-        headers = {"Authorization": f"Bearer {access_token}"}
-        validation_response = requests.get(validation_url, headers=headers)
+        logger.info(validation_url)
+        validation_response = requests.get(validation_url)
         if validation_response.status_code == 200 and validation_response.json().get("valid") == True:
             logger.info("Valid User")
             return validation_response.json().get("valid")
-        else:     
+        else:
             # User validation failed
-            # return False
-            return jsonify({"error": "User validation failed or user does not exist"}), 404
+            return validation_response.json().get("valid")
     except requests.exceptions.RequestException as e:
         # Handle errors in making the validation request
-        print(f"Error validating user: {e}")
-        return jsonify({"error": "An error occurred while validating the user"}), 500
+        return False
     
 @app.route('/api/progress/<user_id>', methods=['GET'])
 def get_user_progress(user_id):
@@ -232,8 +230,8 @@ def log_progress():
             logger.error("All fields required to be filled for logging progress")
             return jsonify({"error": "All fields (user_id, date, weight_kg, workout_done, calories_burned) are required"}), 400
         valid_user_response =  validate_user(user_id)
+
         if valid_user_response:
-            #Check if validation was successful
             try:
                 # Connect to the database
                 conn = get_db_connection()
@@ -263,7 +261,7 @@ def log_progress():
                 conn.close()
         else:
             logger.error("Invalid userid")
-            return jsonify({"message": "Error innvalidating userid", "id": 1}), 400
+            return jsonify({"message": "Error in validating userid or user does not exist"}), 400
     except MissingTokenException as e:
         return jsonify({"message": "Authorization header missing"}), 401
     except ExpiredTokenException as e:
